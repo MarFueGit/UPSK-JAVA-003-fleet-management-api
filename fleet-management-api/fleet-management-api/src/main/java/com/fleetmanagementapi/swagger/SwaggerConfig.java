@@ -14,7 +14,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.fleetmanagementapi.controllers")) // Reemplaza con el paquete de tus controladores
+                .apis(RequestHandlerSelectors.basePackage("com.fleetmanagementapi.controllers ")) // Reemplaza con el paquete de tus controladores
                 .paths(PathSelectors.any())
                 .build();
     }
