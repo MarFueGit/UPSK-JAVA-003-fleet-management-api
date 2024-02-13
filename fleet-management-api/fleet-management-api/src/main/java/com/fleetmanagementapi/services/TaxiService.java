@@ -1,10 +1,11 @@
 package com.fleetmanagementapi.services;
 
 import com.fleetmanagementapi.models.Taxi;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+
 
 public interface TaxiService {
-
-    public List<Taxi> findAll();
-
+    Page<Taxi> findAll(Pageable pageable);
 }
