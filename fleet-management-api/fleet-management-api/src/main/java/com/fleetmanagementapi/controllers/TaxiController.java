@@ -2,8 +2,6 @@ package com.fleetmanagementapi.controllers;
 
 import com.fleetmanagementapi.models.Taxi;
 import com.fleetmanagementapi.services.TaxiService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +18,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@Api(value = "taxis", description = "Taxis")
+
 public class TaxiController {
     @Autowired
     private TaxiService taxiService;
 
     @GetMapping(value = "/taxis")
-    @ApiOperation(value = "Obtiene todos los taxis")
+
     public ResponseEntity<Object> get(@PageableDefault(size = 10) Pageable pageable){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
