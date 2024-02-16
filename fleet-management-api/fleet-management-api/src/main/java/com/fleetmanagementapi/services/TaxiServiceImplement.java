@@ -16,6 +16,10 @@ public class TaxiServiceImplement implements  TaxiService{
     @Autowired
     private TaxiDao taxiDao;
 
+    public TaxiServiceImplement(TaxiDao taxiDao){
+        this.taxiDao = taxiDao;
+    }
+
     @Transactional
     @Override
     public Page<Taxi> findAll(Pageable pageable) {
