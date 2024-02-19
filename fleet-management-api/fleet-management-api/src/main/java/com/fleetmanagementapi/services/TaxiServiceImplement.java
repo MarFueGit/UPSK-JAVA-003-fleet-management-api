@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TaxiServiceImplement implements  TaxiService{
+public class TaxiServiceImplement implements TaxiService{
 
     @Autowired
     private TaxiDao taxiDao;
