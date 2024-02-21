@@ -53,4 +53,6 @@ public class TrajectoryController {
             return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    
 }

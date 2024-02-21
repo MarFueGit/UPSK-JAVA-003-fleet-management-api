@@ -13,6 +13,10 @@ public class TrajectoryServiceImplement implements TrajectoryService {
     @Autowired
     private TrajectoryDao trajectoryDao;
 
+    public TrajectoryServiceImplement(TrajectoryDao trajectoryDao) {
+        this.trajectoryDao = trajectoryDao;
+    }
+
     @Override
     public Page<Trajectorie> findByTaxiIdAndDateGreaterThanEqual(int taxiId, LocalDateTime date, Pageable pageable) {
         return trajectoryDao.findByTaxiIdAndDateGreaterThanEqual(taxiId, date, pageable);
