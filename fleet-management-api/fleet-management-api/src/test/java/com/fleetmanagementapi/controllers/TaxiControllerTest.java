@@ -41,7 +41,7 @@ public class TaxiControllerTest {
     public void testGetTaxis() throws Exception {
         // Mock data
         Taxi taxi = new Taxi();
-        taxi.setId(1);
+        taxi.setIdTaxi(1);
         taxi.setPlate("ABC123");
 
         Pageable pageable = PageRequest.of(1, 10);

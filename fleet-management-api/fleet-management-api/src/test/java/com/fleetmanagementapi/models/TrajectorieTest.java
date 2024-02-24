@@ -11,13 +11,13 @@ class TrajectorieTest {
 @Test
 public void createTrajectorieSuccess(){
    Trajectorie trajectorie = new Trajectorie();
-  trajectorie.setId(5);
+  trajectorie.setIdTrajectorie(5);
    trajectorie.setTaxiId(8);
  LocalDateTime now = LocalDateTime.now();
    trajectorie.setDate(now);
    trajectorie.setLatitude(15.20);
    trajectorie.setLongitude(18.20);
-    Assertions.assertEquals(5, trajectorie.getId());
+    Assertions.assertEquals(5, trajectorie.getIdTrajectorie());
     Assertions.assertEquals(8,trajectorie.getTaxiId());
     Assertions.assertEquals(now, trajectorie.getDate());
     Assertions.assertEquals(15.20,trajectorie.getLatitude());

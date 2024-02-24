@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -54,5 +55,23 @@ public class TrajectoryController {
         }
     }
 
-    
+    @GetMapping(value = "/trajectories/last")
+    @Operation(summary = "Obtiene la última ubicación de cada taxi")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class))
+            }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })})
+    public ResponseEntity<Object> getLastTrajectories(){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<Trajectorie> list = trajectoryService.findLatestTrajectories();
+            return new ResponseEntity<Object>(list, HttpStatus.OK);
+        }
+        catch (Exception e){
+            map.put("message", e.getMessage());
+            return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

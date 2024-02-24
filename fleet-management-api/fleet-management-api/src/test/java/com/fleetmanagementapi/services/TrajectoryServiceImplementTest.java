@@ -34,7 +34,7 @@ class TrajectoryServiceImplementTest {
     void testFindByTaxiIdAndDateGreaterThanEqual() {
         // Mock data
         Trajectorie trajectory = new Trajectorie();
-        trajectory.setId(1);
+        trajectory.setIdTrajectorie(1);
         trajectory.setTaxiId(123);
         trajectory.setDate(LocalDateTime.now());
 

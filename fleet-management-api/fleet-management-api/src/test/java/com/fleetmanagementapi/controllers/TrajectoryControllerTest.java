@@ -44,7 +44,7 @@ class TrajectoryControllerTest {
         Pageable pageable = Pageable.unpaged();
 
         Trajectorie trajectory = new Trajectorie();
-        trajectory.setId(1);
+        trajectory.setIdTrajectorie(1);
         trajectory.setTaxiId(taxiId);
         trajectory.setDate(date);
 

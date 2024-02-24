@@ -9,18 +9,18 @@ import jakarta.persistence.Table;
 @Table(name = "taxis")
 public class Taxi{
     @Id
-    @Column(name = "id")
-    private int id;
+    @Column(name = "idtaxi")
+    private int idTaxi; // IdTaxi
 
     @Column(name = "plate")
     private String plate;
 
-    public int getId() {
-        return id;
+    public int getIdTaxi() {
+        return this.idTaxi;
     } //son métodos de acceso (getters) para los atributos id y plate, respectivamente.
 
-    public void setId(int id) { // son métodos de modificación (setters) para los atributos id y plate, respectivamente.
-        this.id = id;
+    public void setIdTaxi(int id) { // son métodos de modificación (setters) para los atributos id y plate, respectivamente.
+        this.idTaxi = id;
     }
 
     public String getPlate() {

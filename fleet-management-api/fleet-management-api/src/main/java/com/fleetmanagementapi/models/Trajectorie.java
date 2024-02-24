@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "trajectories")
 public class Trajectorie {
     @Id
-    @Column(name="id")
-    private int id;
+    @Column(name="idtrajectorie")
+    private int idTrajectorie; //IdTrajectorie
     @Column(name = "taxi_id")
     private int taxiId;
     @Column(name = "date")
@@ -22,12 +22,12 @@ public class Trajectorie {
     @Column(name = "longitude")
     private Double longitude;
 
-    public int getId() {
-        return id;
+    public int getIdTrajectorie() {
+        return idTrajectorie;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdTrajectorie(int id) {
+        this.idTrajectorie = id;
     }
 
     public int getTaxiId() {
