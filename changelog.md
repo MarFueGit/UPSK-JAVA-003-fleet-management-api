@@ -32,7 +32,7 @@ Nada
 
 <1.2.0> - <29/01/2024>
 Sprint 3
-Se terminó la historia de usuario 2 y 3 y se documento mi proyecto en Swagger, se implementaron test unitarios de historia de usuario 2.
+Se terminó la historia de usuario 2 y 3 y se documentó mi proyecto en Swagger, se implementaron test unitarios de historia de usuario 2.
 
 Added
 Agregue el models de trajectories, el trajectoriesController, trajectorieService, trajectorieDao, y la documentacion Swagger y carpetas de los test de cada clase.
@@ -47,3 +47,21 @@ nada
 
 Removed
 Nada
+
+<1.2.0> - <29/01/2024>
+Sprint 4
+Se estuvo trabajando en la historia de usuario 4, implementando el 2 Endpoint de trajectorie.
+
+Added
+ Primero hice el Query en Posgret y ya que funciono lo pase a Sprint como Query Nativo.
+
+
+Changed
+Nada
+
+
+Fixed
+nada
+
+Removed
+Se quito la paginación en el ultimo Endpoint, pero volvere a ponerselo mas adelante.
