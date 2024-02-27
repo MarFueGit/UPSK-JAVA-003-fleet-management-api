@@ -13,6 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 public  interface TrajectoryDao extends JpaRepository<Trajectorie, Integer> {
+    @Query(value = "select t.idtrajectorie , t.taxi_id, t.\"date\" , t.latitude , t.longitude , ta.plate from trajectories t \n" +
+            "inner join taxis ta \n" +
+            "on ta.idtaxi = t.taxi_id;",
+    nativeQuery = true)
     Page<Trajectorie> findByTaxiIdAndDateGreaterThanEqual(int taxi_id, LocalDateTime date, Pageable pageable);
     @Query(value = "WITH trajectories AS (\n" +
             "    SELECT \n" +
@@ -40,5 +44,5 @@ public  interface TrajectoryDao extends JpaRepository<Trajectorie, Integer> {
             "WHERE \n" +
             "    row_num = 1;",
             nativeQuery = true)
-    List<Trajectorie> findLatestTrajectories();
+    List<Trajectorie> findLatestTrajectories(int page);
 }

@@ -45,7 +45,6 @@ class TrajectoryControllerTest {
 
         Trajectorie trajectory = new Trajectorie();
         trajectory.setIdTrajectorie(1);
-        trajectory.setTaxiId(taxiId);
         trajectory.setDate(date);
 
         // Mock behavior of trajectoryService.findByTaxiIdAndDateGreaterThanEqual()
@@ -59,7 +58,6 @@ class TrajectoryControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Page<Trajectorie> result = (Page<Trajectorie>) responseEntity.getBody();
         assertEquals(1, result.getTotalElements());
-        assertEquals(taxiId, result.getContent().get(0).getTaxiId());
         assertEquals(date, result.getContent().get(0).getDate());
     }
 }

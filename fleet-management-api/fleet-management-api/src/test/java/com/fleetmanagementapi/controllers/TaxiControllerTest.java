@@ -53,7 +53,7 @@ public class TaxiControllerTest {
         // Perform GET request
         mockMvc.perform(MockMvcRequestBuilders.get("/api/taxis"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].idTaxi").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].plate").value("ABC123"));
     }
 }

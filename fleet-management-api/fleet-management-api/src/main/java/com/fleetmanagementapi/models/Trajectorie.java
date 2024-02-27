@@ -22,6 +22,8 @@ public class Trajectorie {
     @Column(name = "longitude")
     private Double longitude;
 
+    private String plate;
+
     public int getIdTrajectorie() {
         return idTrajectorie;
     }
@@ -60,5 +62,13 @@ public class Trajectorie {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
     }
 }

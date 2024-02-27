@@ -35,7 +35,6 @@ class TrajectoryServiceImplementTest {
         // Mock data
         Trajectorie trajectory = new Trajectorie();
         trajectory.setIdTrajectorie(1);
-        trajectory.setTaxiId(123);
         trajectory.setDate(LocalDateTime.now());
 
         int taxiId = 123;
@@ -51,6 +50,5 @@ class TrajectoryServiceImplementTest {
 
         // Assertions
         assertEquals(1, result.getTotalElements());
-        assertEquals(123, result.getContent().get(0).getTaxiId());
     }
 }

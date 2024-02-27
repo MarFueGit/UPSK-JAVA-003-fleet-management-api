@@ -63,10 +63,10 @@ public class TrajectoryController {
             }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })})
-    public ResponseEntity<Object> getLastTrajectories(){
+    public ResponseEntity<Object> getLastTrajectories(int page, int pageSize){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<Trajectorie> list = trajectoryService.findLatestTrajectories();
+            Page<Trajectorie> list = trajectoryService.findLatestTrajectories(page, pageSize);
             return new ResponseEntity<Object>(list, HttpStatus.OK);
         }
         catch (Exception e){
