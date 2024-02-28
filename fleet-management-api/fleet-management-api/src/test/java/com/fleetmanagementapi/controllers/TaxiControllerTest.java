@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 @AutoConfigureMockMvc
 public class TaxiControllerTest {
 
+    //El mock de MVC nos ayuda mockear la app
     @Autowired
     private MockMvc mockMvc;
 

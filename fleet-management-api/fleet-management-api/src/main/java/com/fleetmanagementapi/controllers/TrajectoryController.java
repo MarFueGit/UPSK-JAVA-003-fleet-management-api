@@ -55,7 +55,7 @@ public class TrajectoryController {
         }
     }
 
-    @GetMapping(value = "/trajectories/last")
+    @GetMapping(value = "/trajectorie/latest")
     @Operation(summary = "Obtiene la última ubicación de cada taxi")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {

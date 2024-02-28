@@ -28,7 +28,8 @@ public class TrajectoryServiceImplement implements TrajectoryService {
     @Override
     public Page<Trajectorie> findLatestTrajectories(int initPage, int pageSize) {
         Pageable page = PageRequest.of(initPage, pageSize);
-        List<Trajectorie>  trajectories= trajectoryDao.findLatestTrajectories(initPage);
+
+        List<Trajectorie>  trajectories = trajectoryDao.findLatestTrajectories(page);
         return new PageImpl<>(trajectories, page, trajectories.size());
     }
 }

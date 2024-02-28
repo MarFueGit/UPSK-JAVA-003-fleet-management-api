@@ -60,4 +60,25 @@ class TrajectoryControllerTest {
         assertEquals(1, result.getTotalElements());
         assertEquals(date, result.getContent().get(0).getDate());
     }
+
+    @Test
+    public void testGetLastTrajectories_Success() {
+        int taxiId = 1;
+        LocalDateTime date = LocalDateTime.of(2022, 1, 1, 0, 0);
+        Pageable pageable = Pageable.unpaged();
+
+        Trajectorie trajectory = new Trajectorie();
+        trajectory.setIdTrajectorie(1);
+        trajectory.setDate(date);
+
+        when(trajectoryService.findLatestTrajectories(anyInt(), anyInt())).thenReturn(new PageImpl<>(Collections.singletonList(trajectory)));
+
+        // Calling the controller method
+        ResponseEntity<Object> response = trajectoryController.getLastTrajectories(1, 10);
+
+        // Verifying the response
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 }
+
+

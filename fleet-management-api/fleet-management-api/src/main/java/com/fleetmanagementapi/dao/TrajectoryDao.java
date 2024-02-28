@@ -44,5 +44,5 @@ public  interface TrajectoryDao extends JpaRepository<Trajectorie, Integer> {
             "WHERE \n" +
             "    row_num = 1;",
             nativeQuery = true)
-    List<Trajectorie> findLatestTrajectories(int page);
+    List<Trajectorie> findLatestTrajectories(Pageable pageable);
 }
