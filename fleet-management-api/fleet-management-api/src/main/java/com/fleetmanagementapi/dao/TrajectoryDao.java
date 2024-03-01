@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -45,4 +46,10 @@ public  interface TrajectoryDao extends JpaRepository<Trajectorie, Integer> {
             "    row_num = 1;",
             nativeQuery = true)
     List<Trajectorie> findLatestTrajectories(Pageable pageable);
+
+    @Query(value = "SELECT ta.idTaxi, ta.plate, t.latitude, t.longitude, t.date " +
+            "FROM trajectories t " +
+            "INNER JOIN taxis ta ON t.taxi_id = ta.idtaxi " +
+            "WHERE ta.plate = :plate AND DATE(t.date) = :date", nativeQuery = true)
+    List<Object> getTrajectoriesByPlateAndDate(@Param("plate") String plate, @Param("date") LocalDateTime date);
 }

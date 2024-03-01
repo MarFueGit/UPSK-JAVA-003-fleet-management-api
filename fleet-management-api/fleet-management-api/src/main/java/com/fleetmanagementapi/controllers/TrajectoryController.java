@@ -1,6 +1,8 @@
 package com.fleetmanagementapi.controllers;
 
+import com.fleetmanagementapi.models.EmailDTO;
 import com.fleetmanagementapi.models.Trajectorie;
+import com.fleetmanagementapi.services.IEmailService;
 import com.fleetmanagementapi.services.TrajectoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +18,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 @RestController
 @RequestMapping("/api")
@@ -29,6 +32,8 @@ import java.util.Map;
 public class TrajectoryController {
     @Autowired
     private TrajectoryService trajectoryService;
+    @Autowired
+    IEmailService emailService;
 
     @GetMapping(value = "/trajectories/{id}")
     @Operation(summary = "Obtiene todas las ubicaciones por id y fecha")
@@ -73,5 +78,15 @@ public class TrajectoryController {
             map.put("message", e.getMessage());
             return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    //locations/email
+    @PostMapping("/locations/email")
+    public ResponseEntity<Object> getTaxiLocations(@RequestBody (required = false) EmailDTO email ) throws MessagingException {
+        
+        List<Object> locations = trajectoryService.getTrajectoriesByPlateAndDate(email.getPlate(), email.getDate().atStartOfDay());
+        // Envio de correo
+        emailService.sendMail(email);
+        return new ResponseEntity<Object>(locations, HttpStatus.OK);
     }
 }

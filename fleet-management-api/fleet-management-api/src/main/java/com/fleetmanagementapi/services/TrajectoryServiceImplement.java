@@ -32,4 +32,9 @@ public class TrajectoryServiceImplement implements TrajectoryService {
         List<Trajectorie>  trajectories = trajectoryDao.findLatestTrajectories(page);
         return new PageImpl<>(trajectories, page, trajectories.size());
     }
+
+    @Override
+    public List<Object> getTrajectoriesByPlateAndDate(String plate, LocalDateTime date) {
+        return trajectoryDao.getTrajectoriesByPlateAndDate(plate, date);
+    }
 }

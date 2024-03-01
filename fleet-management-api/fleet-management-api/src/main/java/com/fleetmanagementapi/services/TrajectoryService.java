@@ -10,4 +10,6 @@ public interface TrajectoryService {
 
     Page<Trajectorie> findLatestTrajectories(int page, int pageSize);
 
+    List<Object> getTrajectoriesByPlateAndDate(String plate, LocalDateTime date);
+
 }
