@@ -48,7 +48,7 @@ nada
 Removed
 Nada
 
-<1.2.0> - <29/01/2024>
+<1.3.0> - <29/01/2024>
 Sprint 4
 Se estuvo trabajando en la historia de usuario 4, implementando el 2 Endpoint de trajectorie.
 
@@ -65,3 +65,22 @@ nada
 
 Removed
 Se quito la paginación en el ultimo Endpoint, pero volvere a ponerselo mas adelante.
+
+
+<1.4.0> - <29/01/2024>
+Sprint 5
+Se estuvo trabajando en la historia de usuario 8, implementando el email y el excel para cargar la data de la base de datos
+
+Added
+Hize el Endpoint para obtener las ubicaciones de los taxis por placa y fecha, tambien implemente como enviar correos en java con email y enviar la data por excel de la base de datos.
+
+
+Changed
+Nada
+
+
+Fixed
+nada
+
+Removed
+Nada

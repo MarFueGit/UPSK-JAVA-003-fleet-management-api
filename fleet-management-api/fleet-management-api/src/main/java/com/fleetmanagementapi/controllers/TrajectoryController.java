@@ -1,5 +1,6 @@
 package com.fleetmanagementapi.controllers;
-
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.fleetmanagementapi.models.EmailDTO;
 import com.fleetmanagementapi.models.Trajectorie;
 import com.fleetmanagementapi.services.IEmailService;
@@ -18,12 +19,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -82,11 +84,50 @@ public class TrajectoryController {
 
     //locations/email
     @PostMapping("/locations/email")
-    public ResponseEntity<Object> getTaxiLocations(@RequestBody (required = false) EmailDTO email ) throws MessagingException {
+    public ResponseEntity<Object> getTaxiLocations(@RequestBody (required = false) EmailDTO email ) throws MessagingException, IOException {
         
-        List<Object> locations = trajectoryService.getTrajectoriesByPlateAndDate(email.getPlate(), email.getDate().atStartOfDay());
+        List<Object> data = trajectoryService.getTrajectoriesByPlateAndDate(email.getPlate(), email.getDate().atStartOfDay());
+        // Create a new workbook
+        Workbook workbook = new XSSFWorkbook();
+
+        // Create a new sheet
+        Sheet sheet = workbook.createSheet("Taxi Data");
+        // Create headers
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {"ID TAXI", "PLATE", "LATITUDE", "LONGITUDE", "DATE"};
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+
+        // Populate data
+        for (int rowIndex = 0; rowIndex < data.size(); rowIndex++) {
+            Row row = sheet.createRow(rowIndex + 1);
+            Object[] rowData = (Object[]) data.get(rowIndex);
+            for (int cellIndex = 0; cellIndex < rowData.length; cellIndex++) {
+                Cell cell = row.createCell(cellIndex);
+                Object value = rowData[cellIndex];
+                if (value instanceof Double) {
+                    cell.setCellValue((Double) value);
+                } else if (value instanceof String) {
+                    cell.setCellValue((String) value);
+                } else if (value instanceof LocalDateTime) {
+                    LocalDateTime localDateTime = (LocalDateTime) value;
+                    cell.setCellValue(localDateTime.toString());
+                } else {
+                    // Handle other data types or unsupported types
+                    cell.setCellValue(value != null ? value.toString() : "");
+                }
+            }
+        }
+
+        // Write workbook to byte array
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        byte[] bytes = outputStream.toByteArray();
+
         // Envio de correo
-        emailService.sendMail(email);
-        return new ResponseEntity<Object>(locations, HttpStatus.OK);
+        emailService.sendMail(email, bytes);
+        return new ResponseEntity<Object>(data, HttpStatus.OK);
     }
 }

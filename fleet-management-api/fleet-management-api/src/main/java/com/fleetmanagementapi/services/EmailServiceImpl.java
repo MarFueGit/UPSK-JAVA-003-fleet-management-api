@@ -3,6 +3,7 @@ import com.fleetmanagementapi.models.EmailDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.context.annotation.EnableMBeanExport;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class EmailServiceImpl implements IEmailService {
         this.templateEngine = templateEngine;
     }
     @Override
-    public void sendMail(EmailDTO email) throws MessagingException {
+    public void sendMail(EmailDTO email, byte[] attachmentBytes) throws MessagingException {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
 
@@ -27,15 +28,14 @@ public class EmailServiceImpl implements IEmailService {
 
             helper.setTo(email.getDestinatario());
             helper.setSubject(email.getAsunto());
+            helper.setText(email.getMensaje());
 
-            Context context = new Context();
-            context.setVariable("mensaje", email.getMensaje());
-            String contentHTML = templateEngine.process("email", context);
+            // Attach the file
+            helper.addAttachment("filename.xlsx", new ByteArrayResource(attachmentBytes));
 
-            helper.setText(contentHTML, true);
             javaMailSender.send(message);
-        } catch (Exception e){
-            throw new RuntimeException("Error " + "al enviar el correo: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al enviar el correo: " + e.getMessage(), e);
         }
     }
     
