@@ -1,4 +1,5 @@
 package com.fleetmanagementapi.controllers;
+import com.fleetmanagementapi.services.IExcelService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.fleetmanagementapi.models.EmailDTO;
@@ -36,6 +37,9 @@ public class TrajectoryController {
     private TrajectoryService trajectoryService;
     @Autowired
     IEmailService emailService;
+
+    @Autowired
+    IExcelService excelService;
 
     @GetMapping(value = "/trajectories/{id}")
     @Operation(summary = "Obtiene todas las ubicaciones por id y fecha")
@@ -87,46 +91,14 @@ public class TrajectoryController {
     public ResponseEntity<Object> getTaxiLocations(@RequestBody (required = false) EmailDTO email ) throws MessagingException, IOException {
         
         List<Object> data = trajectoryService.getTrajectoriesByPlateAndDate(email.getPlate(), email.getDate().atStartOfDay());
-        // Create a new workbook
-        Workbook workbook = new XSSFWorkbook();
-
-        // Create a new sheet
-        Sheet sheet = workbook.createSheet("Taxi Data");
-        // Create headers
-        Row headerRow = sheet.createRow(0);
-        String[] headers = {"ID TAXI", "PLATE", "LATITUDE", "LONGITUDE", "DATE"};
-        for (int i = 0; i < headers.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
-        }
-
-        // Populate data
-        for (int rowIndex = 0; rowIndex < data.size(); rowIndex++) {
-            Row row = sheet.createRow(rowIndex + 1);
-            Object[] rowData = (Object[]) data.get(rowIndex);
-            for (int cellIndex = 0; cellIndex < rowData.length; cellIndex++) {
-                Cell cell = row.createCell(cellIndex);
-                Object value = rowData[cellIndex];
-                if (value instanceof Double) {
-                    cell.setCellValue((Double) value);
-                } else if (value instanceof String) {
-                    cell.setCellValue((String) value);
-                } else if (value instanceof LocalDateTime) {
-                    LocalDateTime localDateTime = (LocalDateTime) value;
-                    cell.setCellValue(localDateTime.toString());
-                } else {
-                    // Handle other data types or unsupported types
-                    cell.setCellValue(value != null ? value.toString() : "");
-                }
-            }
-        }
-
-        // Write workbook to byte array
+        // Obtenemos y creamos el excel
+        Workbook file = excelService.createExcelFile(data);
+        // agregamos la data al archivo excel
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        workbook.write(outputStream);
+        file.write(outputStream);
+        // Creamos un array para pasarselo al email
         byte[] bytes = outputStream.toByteArray();
-
-        // Envio de correo
+        // Envious de correo
         emailService.sendMail(email, bytes);
         return new ResponseEntity<Object>(data, HttpStatus.OK);
     }

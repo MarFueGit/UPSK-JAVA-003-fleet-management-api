@@ -11,7 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:email.properties")
+@PropertySource("classpath:email.properties") // Esta anotación especifica el archivo de propiedades 'Email.properties que se utilizara para cargar las funciones del correo electronic.
 public class EmailConfig {
 
     @Value("${email.username}")
@@ -20,7 +20,7 @@ public class EmailConfig {
     @Value("${email.password}")
     private String password;
 
-    private Properties getMailProperties() {
+    private Properties getMailProperties() { // Este método devuelve un objeto 'properties' que contiene las propiedades de configuration del servidor de correo
         Properties properties = new Properties();
         properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         properties.put("mail.transport.protocol", "smtp");
@@ -33,7 +33,7 @@ public class EmailConfig {
     }
 
     @Bean
-    public JavaMailSender javaMailSender(){
+    public JavaMailSender javaMailSender(){ // Este método crea y configura un bean 'JavaMailSender' que se utiliza para enviar correos electronics
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setJavaMailProperties(getMailProperties());
         mailSender.setUsername(email);
@@ -46,5 +46,6 @@ public class EmailConfig {
     @Bean
     public ResourceLoader resourceLoader(){
         return new DefaultResourceLoader();
-    }
+    } // Este método crea y configura un bean 'ResourceLoader' que se utiliza para cargar recursos como archivos en el sistema de archivos.
+
 }
